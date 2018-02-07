@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+  <h1>Edit Wiki</h1>
+  <div class="col-md-8">
+    <%= form_for @wiki do |f| %>
+    <div class="form-group">
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :body %>
+      <%= f.text_area :body, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :private %>
+      <%= f.check_box :private %>
+    </div>
+      <%= link_to "Delete", wiki_path(@wiki), method: 'delete', data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <%= f.submit "Save", class: 'btn btn-success' %>
+    <% end %>
+
+  </div>
+</div>
