@@ -1,0 +1,14 @@
+<div class="container">
+  <% @wikis.each do |wiki| %>
+  <div class="col-md-8">
+    <div class="form-group">
+      <h1> <%= link_to wiki.title, wiki_path(wiki)  %> </h1>
+      <h5> created by: <%= wiki.user.email %> </h5>
+    </div>
+    <div class="form-group">
+      <%= wiki.body %>
+    </div>
+    <%= link_to "Edit Wiki", edit_wiki_path(wiki) %>
+  </div>
+  <% end %>
+</div>
