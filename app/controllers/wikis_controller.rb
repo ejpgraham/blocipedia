@@ -48,6 +48,7 @@ class WikisController < ApplicationController
 
     if @wiki.destroy
       flash[:notice] = "Wiki destroyed."
+      @wikis = Wiki.all
       render :index
     else
       flash.now[:alert] = "Your Wiki could not be deleted."
