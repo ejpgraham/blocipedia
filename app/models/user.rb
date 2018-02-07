@@ -9,7 +9,5 @@ class User < ApplicationRecord
 
   def give_user_standard_role_only
     self.standard = true
-    self.premium = false
-    self.admin = false
   end
 end
