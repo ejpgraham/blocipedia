@@ -34,6 +34,8 @@ gem 'devise'
 gem 'figaro'
 gem 'pundit'
 gem 'faker'
+gem 'stripe'
+gem 'pry'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
