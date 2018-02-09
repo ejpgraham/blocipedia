@@ -1,14 +1,18 @@
 <div class="container">
   <% @wikis.each do |wiki| %>
-  <div class="col-md-8">
-    <div class="form-group">
-      <h1> <%= link_to wiki.title, wiki_path(wiki)  %> </h1>
-      <h5> created by: <%= wiki.user.email %> </h5>
-    </div>
-    <div class="form-group">
-      <%= wiki.body %>
-    </div>
-    <%= link_to "Edit Wiki", edit_wiki_path(wiki) %>
-  </div>
+    <% if wiki_is_private_and_user_has_access(wiki) || wiki_is_public(wiki)  %>
+      <div class="col-md-8">
+        <div class="form-group">
+          <h1> <%= link_to wiki.title, wiki_path(wiki)  %> </h1>
+          <h5> created by: <%= wiki.user.email %> </h5>
+        </div>
+        <div class="form-group">
+          <%= wiki.body %>
+        </div>
+        <%= link_to "Edit Wiki", edit_wiki_path(wiki) %>
+      </div>
+    <% else %>
+      You do not have access to this wiki
+    <% end %>
   <% end %>
 </div>

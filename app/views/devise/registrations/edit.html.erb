@@ -41,7 +41,7 @@
   <%= link_to "Upgrade to Premium for only $10.00", new_charge_path %>
 <% else %>
   <h5>You are already a premium user!</h5>
-  <%= link_to "Downgrade your account to standard. No refunds!", downgrade_path, method: :patch  %>
+  <%= link_to "Downgrade your account to standard. No refunds!", downgrade_path, method: :patch, data: {confirm: "Are you sure? Your private wikis will become public!"}  %>
 <% end %>
 
 <h3>Cancel my account</h3>
