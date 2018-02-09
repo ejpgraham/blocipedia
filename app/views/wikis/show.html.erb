@@ -6,7 +6,7 @@
       <h5> created by: <%= @wiki.user.email %> </h5>
     </div>
     <div class="form-group">
-      <%= @wiki.body %>
+      <%= @wiki.body.html_safe %>
     </div>
     <%= link_to "Edit Wiki", edit_wiki_path(@wiki) %>
   </div>

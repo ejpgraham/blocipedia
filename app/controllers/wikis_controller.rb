@@ -1,5 +1,6 @@
 class WikisController < ApplicationController
 
+
   def show
     @wiki = Wiki.find(params[:id])
   end
@@ -59,7 +60,14 @@ class WikisController < ApplicationController
 
   private
 
+  def markdown_render
+    renderer = Redcarpet::Render::HTML.new
+    markdown = Redcarpet::Markdown.new(renderer, extensions = {})
+  end
+
   def wiki_params
+    markdown = markdown_render
+    params[:wiki][:body] = markdown.render(params[:wiki][:body])
     params.require(:wiki).permit(:title, :body, :private)
   end
 
