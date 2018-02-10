@@ -7,12 +7,9 @@
           <h5> created by: <%= wiki.user.email %> </h5>
         </div>
         <div class="form-group">
-          <%= wiki.body %>
+          <%= markdown_render(wiki).html_safe %>
         </div>
-        <%= link_to "Edit Wiki", edit_wiki_path(wiki) %>
       </div>
-    <% else %>
-      You do not have access to this wiki
     <% end %>
   <% end %>
 </div>

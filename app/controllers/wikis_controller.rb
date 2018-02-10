@@ -1,21 +1,27 @@
 class WikisController < ApplicationController
-
+  include Pundit
+  after_action :verify_authorized, except: [:index]
 
   def show
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def new
     @wiki = Wiki.new
+    authorize @wiki
   end
 
   def index
-    @wikis = Wiki.all
+    @wikis = policy_scope(Wiki)
   end
 
   def create
     @user = current_user
-    @wiki = @user.wikis.build(wiki_params)
+    @wiki = Wiki.new(wiki_params)
+    @wiki.user = @user
+    authorize @wiki
+
 
     if @wiki.save
       flash[:notice] = "Your wiki was created!"
@@ -28,10 +34,12 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def update
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
     @wiki.assign_attributes(wiki_params)
 
     if @wiki.save
@@ -46,11 +54,11 @@ class WikisController < ApplicationController
 
   def destroy
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
 
     if @wiki.destroy
       flash[:notice] = "Wiki destroyed."
-      @wikis = Wiki.all
-      render :index
+      redirect_to wikis_path
     else
       flash.now[:alert] = "Your Wiki could not be deleted."
       render :edit
@@ -60,15 +68,8 @@ class WikisController < ApplicationController
 
   private
 
-  def markdown_render
-    renderer = Redcarpet::Render::HTML.new
-    markdown = Redcarpet::Markdown.new(renderer, extensions = {})
-  end
-
   def wiki_params
-    markdown = markdown_render
-    params[:wiki][:body] = markdown.render(params[:wiki][:body])
-    params.require(:wiki).permit(:title, :body, :private)
+    params.require(:wiki).permit(:title, :body, :private, user_ids:[])
   end
 
 end

@@ -12,6 +12,10 @@
       <%= f.text_area :body, class: 'form-control' %>
     </div>
       <%= render partial: 'form', locals: {f: f} %>
+      <% if @wiki.private? && user_is_admin?%>
+        <%= f.label "Add collaborators:" %>
+        <%= f.collection_check_boxes :user_ids, all_users_except_for_wiki_creator(@wiki), :id, :email %>
+      <% end %>
       <%= link_to "Delete", wiki_path(@wiki), method: 'delete', data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
       <%= f.submit "Save", class: 'btn btn-success' %>
     <% end %>
